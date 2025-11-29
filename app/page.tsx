@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { ChevronDown, Search, Heart, MapPin, ArrowRight, CheckCircle2 } from 'lucide-react';
+import Image from 'next/image';
+import { ChevronDown, Search, Heart, MapPin, Star, ArrowRight, CheckCircle2, Play, Calendar, FileText, Users, Gift, Coffee, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 type SpeechRecognition = any;
@@ -32,7 +34,7 @@ const Navbar = () => (
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <Link href="/dashboard">
+        <Link href="/login">
              {/* Hidden Admin Entry */}
             <span className="text-xs font-bold text-[#063324]/50 hover:text-[#063324] uppercase tracking-widest mr-2">Admin</span>
         </Link>
@@ -50,40 +52,44 @@ const Navbar = () => (
 );
 
 // CSS-Only Phone Mockup to match the screenshot vibes
-const PhoneMockup = ({ type = "dark" }: { type?: "dark" | "light" }) => (
+const PhoneMockup = ({ type = "dark", children }: { type?: "dark" | "light", children?: React.ReactNode }) => (
   <div className={`relative w-[280px] h-[580px] border-[8px] ${type === 'dark' ? 'border-gray-900 bg-gray-900' : 'border-white bg-white'} rounded-[3rem] shadow-2xl overflow-hidden`}>
     <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 w-32 bg-black rounded-b-xl z-20"></div>
-    <div className="w-full h-full bg-white overflow-hidden relative">
-        {/* Mock UI Header */}
-        <div className="px-4 pt-10 pb-4 flex gap-2">
-            <div className="flex-1 bg-gray-100 h-10 rounded-full flex items-center px-3 gap-2 text-gray-400 text-sm">
-                <Search size={16}/> Lincoln...
-            </div>
-            <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center">
-                <Heart size={18} className="text-gray-400"/>
-            </div>
-        </div>
-        {/* Mock Cards */}
-        <div className="px-4 space-y-4">
-            <div className="bg-white shadow-lg rounded-2xl p-2">
-                <div className="h-32 bg-cover bg-center rounded-xl bg-[url('https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=1000')]"></div>
-                <div className="mt-2 px-1">
-                    <div className="flex justify-between font-bold text-gray-800"><span>$630/mth</span> <span className="flex items-center gap-1 text-xs font-normal bg-green-100 text-green-700 px-2 rounded-full">Bills Inc.</span></div>
-                    <div className="text-xs text-gray-500 mt-1">4 Bed • 2 Bath</div>
+    <div className="w-full h-full bg-white overflow-hidden relative font-sans">
+        {children || (
+            /* Default Find Properties Content */
+            <>
+                <div className="px-4 pt-10 pb-4 flex gap-2">
+                    <div className="flex-1 bg-gray-100 h-10 rounded-full flex items-center px-3 gap-2 text-gray-400 text-sm">
+                        <Search size={16}/> Lincoln...
+                    </div>
+                    <div className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center">
+                        <Heart size={18} className="text-gray-400"/>
+                    </div>
                 </div>
-            </div>
-            <div className="bg-white shadow-lg rounded-2xl p-2">
-                <div className="h-32 bg-cover bg-center rounded-xl bg-[url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1000')]"></div>
-                <div className="mt-2 px-1">
-                    <div className="flex justify-between font-bold text-gray-800"><span>$515/mth</span></div>
-                    <div className="text-xs text-gray-500 mt-1">2 Bed • 1 Bath</div>
+                {/* Mock Cards */}
+                <div className="px-4 space-y-4">
+                    <div className="bg-white shadow-lg rounded-2xl p-2">
+                        <div className="h-32 bg-cover bg-center rounded-xl bg-[url('https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?q=80&w=1000')]"></div>
+                        <div className="mt-2 px-1">
+                            <div className="flex justify-between font-bold text-gray-800"><span>$630/mth</span> <span className="flex items-center gap-1 text-xs font-normal bg-green-100 text-green-700 px-2 rounded-full">Bills Inc.</span></div>
+                            <div className="text-xs text-gray-500 mt-1">4 Bed • 2 Bath</div>
+                        </div>
+                    </div>
+                    <div className="bg-white shadow-lg rounded-2xl p-2">
+                        <div className="h-32 bg-cover bg-center rounded-xl bg-[url('https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?q=80&w=1000')]"></div>
+                        <div className="mt-2 px-1">
+                            <div className="flex justify-between font-bold text-gray-800"><span>$515/mth</span></div>
+                            <div className="text-xs text-gray-500 mt-1">2 Bed • 1 Bath</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        {/* Floating Map Button */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#063324] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg z-10">
-            <MapPin size={14}/> Map View
-        </div>
+                {/* Floating Map Button */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-[#063324] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 shadow-lg z-10">
+                    <MapPin size={14}/> Map View
+                </div>
+            </>
+        )}
     </div>
   </div>
 );
@@ -506,8 +512,8 @@ const Hero = ({ onBeginJourney }: { onBeginJourney: () => void }) => (
         </div>
 
         <div className="flex items-center gap-4 pt-8 opacity-80">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" className="h-10" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" className="h-10" />
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" width={120} height={40} className="h-10 w-auto" />
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" width={135} height={40} className="h-10 w-auto" />
         </div>
       </div>
 
@@ -536,6 +542,164 @@ const Hero = ({ onBeginJourney }: { onBeginJourney: () => void }) => (
 
 const FeaturesSection = () => {
     const [activeTab, setActiveTab] = useState("Find properties");
+
+    // Dynamic Content Renderer
+    const renderContent = () => {
+        switch(activeTab) {
+            case "Book viewings":
+                return (
+                    <PhoneMockup type="light">
+                        <div className="bg-[#F0F7F4] h-full pt-12 px-4 font-sans">
+                            <h3 className="text-xl font-bold text-[#063324] mb-4 flex items-center gap-2"><Calendar size={20}/> My Viewings</h3>
+                            <div className="space-y-3">
+                                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                                    <div className="flex justify-between mb-2">
+                                        <span className="font-bold text-[#063324]">The Quad</span>
+                                        <span className="text-xs bg-[#D2E6DE] text-[#063324] px-2 py-1 rounded-full font-bold">Upcoming</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
+                                        <Clock size={14}/> Today, 2:00 PM
+                                    </div>
+                                    <button className="w-full py-2 rounded-xl bg-[#063324] text-white text-xs font-bold hover:bg-[#154D38] transition">Get Directions</button>
+                                </div>
+                                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 opacity-60">
+                                     <div className="flex justify-between mb-2">
+                                        <span className="font-bold text-[#063324]">Oak House</span>
+                                        <span className="text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full font-bold">Past</span>
+                                    </div>
+                                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                                        <Clock size={14}/> Yesterday
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="mt-6">
+                                <h4 className="font-bold text-[#063324] mb-3 text-sm">Suggested Times</h4>
+                                <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
+                                    {["10:00 AM", "1:30 PM", "4:15 PM"].map(t => (
+                                        <div key={t} className="bg-white border border-gray-200 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap">{t}</div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </PhoneMockup>
+                );
+            case "Request lease":
+                 return (
+                    <PhoneMockup type="light">
+                        <div className="bg-white h-full pt-12 px-6 flex flex-col relative font-sans">
+                             <div className="text-center mb-6">
+                                <div className="w-16 h-16 bg-[#E8F5F1] rounded-full flex items-center justify-center mx-auto mb-4 text-[#063324]">
+                                    <FileText size={32} />
+                                </div>
+                                <h3 className="text-xl font-bold text-[#063324]">Lease Ready</h3>
+                                <p className="text-sm text-gray-400 mt-1">Review and sign your tenancy agreement for The Quad.</p>
+                            </div>
+                            
+                            <div className="space-y-4 flex-1">
+                                <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
+                                    <div className="bg-green-100 p-2 rounded-full text-green-600"><CheckCircle2 size={16}/></div>
+                                    <div className="text-sm font-medium text-gray-600">Identity Verified</div>
+                                </div>
+                                 <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl">
+                                    <div className="bg-green-100 p-2 rounded-full text-green-600"><CheckCircle2 size={16}/></div>
+                                    <div className="text-sm font-medium text-gray-600">Guarantor Approved</div>
+                                </div>
+                                <div className="flex items-center gap-4 p-3 bg-[#E8F5F1] rounded-xl border border-[#063324]/10 shadow-sm">
+                                    <div className="bg-white p-2 rounded-full text-[#063324] animate-pulse"><FileText size={16}/></div>
+                                    <div className="text-sm font-bold text-[#063324]">Sign Contract</div>
+                                </div>
+                            </div>
+
+                            <button className="w-full bg-[#063324] text-white py-4 rounded-2xl font-bold text-lg mb-8 shadow-xl shadow-[#063324]/20 hover:scale-105 transition">
+                                Tap to Sign
+                            </button>
+                        </div>
+                    </PhoneMockup>
+                 );
+            case "Find or fill a room":
+                return (
+                     <PhoneMockup type="light">
+                        <div className="bg-white h-full pt-10 font-sans">
+                            <div className="px-4 mb-4 flex justify-between items-center">
+                                <h3 className="font-bold text-[#063324] text-lg">Roommate Match</h3>
+                                <div className="p-2 bg-gray-100 rounded-full"><Users size={16}/></div>
+                            </div>
+                            
+                            {/* Card Stack Effect */}
+                            <div className="relative px-4 pt-2">
+                                <div className="absolute top-0 left-6 right-6 h-64 bg-gray-100 rounded-[2rem] transform scale-90 -translate-y-4"></div>
+                                <div className="relative bg-white border border-gray-200 shadow-xl rounded-[2rem] overflow-hidden">
+                                    <div className="h-48 bg-cover bg-center bg-[url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1000')]">
+                                        <div className="w-full h-full bg-gradient-to-t from-black/60 to-transparent flex items-end p-4">
+                                            <div className="text-white">
+                                                <h4 className="font-bold text-xl">Sarah, 21</h4>
+                                                <p className="text-xs opacity-90">Psychology • Leeds Arts</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="p-4">
+                                        <div className="flex gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-pink-50 text-pink-600 rounded-full text-xs font-bold">Early Bird</span>
+                                            <span className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-xs font-bold">Vegan</span>
+                                        </div>
+                                        <div className="flex gap-4 mt-2 justify-center">
+                                            <button className="w-12 h-12 rounded-full border-2 border-red-200 text-red-400 flex items-center justify-center hover:bg-red-50 transition"><ArrowRight className="rotate-180" size={20}/></button>
+                                            <button className="w-12 h-12 rounded-full bg-[#063324] text-white flex items-center justify-center shadow-lg hover:scale-110 transition"><Heart size={20}/></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </PhoneMockup>
+                );
+            case "Redeem perks":
+                return (
+                     <PhoneMockup type="light">
+                         <div className="bg-gray-50 h-full pt-12 px-4 overflow-y-auto no-scrollbar font-sans">
+                            <h3 className="text-xl font-bold text-[#063324] mb-4 flex items-center gap-2"><Gift size={20}/> Student Perks</h3>
+                            
+                            <div className="grid grid-cols-2 gap-3 pb-20">
+                                <div className="bg-white p-3 rounded-2xl shadow-sm flex flex-col items-center text-center gap-2 hover:shadow-md transition">
+                                    <div className="w-10 h-10 rounded-full bg-[#006241] text-white flex items-center justify-center"><Coffee size={18}/></div>
+                                    <div className="text-xs font-bold text-gray-800">Starbucks</div>
+                                    <div className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">20% OFF</div>
+                                </div>
+                                <div className="bg-white p-3 rounded-2xl shadow-sm flex flex-col items-center text-center gap-2 hover:shadow-md transition">
+                                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center"><span className="font-bold text-xs">UBER</span></div>
+                                    <div className="text-xs font-bold text-gray-800">Uber Eats</div>
+                                    <div className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">Free Del</div>
+                                </div>
+                                <div className="bg-white p-3 rounded-2xl shadow-sm flex flex-col items-center text-center gap-2 hover:shadow-md transition">
+                                    <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center"><span className="font-bold text-xs">ASOS</span></div>
+                                    <div className="text-xs font-bold text-gray-800">ASOS</div>
+                                    <div className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">15% OFF</div>
+                                </div>
+                                <div className="bg-white p-3 rounded-2xl shadow-sm flex flex-col items-center text-center gap-2 hover:shadow-md transition">
+                                    <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center"><span className="font-bold text-xs">GYM</span></div>
+                                    <div className="text-xs font-bold text-gray-800">PureGym</div>
+                                    <div className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-bold">£0 Join</div>
+                                </div>
+                            </div>
+
+                            <div className="absolute bottom-6 left-4 right-4 bg-[#063324] rounded-2xl p-4 text-white overflow-hidden shadow-lg">
+                                <div className="relative z-10">
+                                    <div className="text-xs opacity-70 mb-1">Your Points</div>
+                                    <div className="text-3xl font-bold">2,450</div>
+                                    <div className="text-xs mt-2 bg-white/20 inline-block px-2 py-1 rounded-lg">Level: Gold Student</div>
+                                </div>
+                                <Star className="absolute -right-4 -bottom-4 text-white/10 w-24 h-24" fill="currentColor"/>
+                            </div>
+                         </div>
+                     </PhoneMockup>
+                );
+            default: // Find properties
+                return (
+                     <PhoneMockup type="light">
+                        {/* Default content handled inside component when children is null */}
+                     </PhoneMockup>
+                );
+        }
+    }
     
     return (
         <section className="bg-[#D2E6DE] py-24 px-6 relative overflow-hidden">
@@ -551,7 +715,7 @@ const FeaturesSection = () => {
                             onClick={() => setActiveTab(tab)}
                             className={`px-6 py-3 rounded-full text-sm font-bold transition-all ${
                                 activeTab === tab 
-                                ? "bg-white text-[#063324] shadow-md" 
+                                ? "bg-white text-[#063324] shadow-md scale-105" 
                                 : "bg-[#063324]/5 text-[#063324] hover:bg-[#063324]/10"
                             }`}
                         >
@@ -561,33 +725,46 @@ const FeaturesSection = () => {
                 </div>
 
                 {/* Feature Content */}
-                <div className="bg-[#063324]/5 rounded-[3rem] p-8 md:p-16 flex flex-col items-center">
+                <div className="bg-[#063324]/5 rounded-[3rem] p-8 md:p-16 flex flex-col items-center min-h-[700px] justify-center">
                     <div className="relative">
                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-white/20 blur-[60px] rounded-full"></div>
-                        <PhoneMockup type="light" />
                         
-                        {/* Floating Tooltips */}
-                        <motion.div 
-                            animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4 }}
-                            className="absolute top-32 -left-24 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 max-w-[200px] text-left"
+                        <motion.div
+                            key={activeTab}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.3 }}
                         >
-                            <div className="bg-green-100 p-2 rounded-full text-green-700"><CheckCircle2 size={20}/></div>
-                            <div>
-                                <div className="text-xs text-gray-500">Filters</div>
-                                <div className="font-bold text-[#063324] text-sm">Bills Included</div>
-                            </div>
+                            {renderContent()}
                         </motion.div>
+                        
+                        {/* Only show tooltips for Find properties */}
+                        {activeTab === "Find properties" && (
+                            <>
+                                <motion.div 
+                                    initial={{ opacity: 0 }} animate={{ opacity: 1, y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 4, delay: 0.5 }}
+                                    className="absolute top-32 -left-24 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 max-w-[200px] text-left hidden md:flex"
+                                >
+                                    <div className="bg-green-100 p-2 rounded-full text-green-700"><CheckCircle2 size={20}/></div>
+                                    <div>
+                                        <div className="text-xs text-gray-500">Filters</div>
+                                        <div className="font-bold text-[#063324] text-sm">Bills Included</div>
+                                    </div>
+                                </motion.div>
 
-                         <motion.div 
-                            animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 5 }}
-                            className="absolute bottom-40 -right-24 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 max-w-[200px] text-left"
-                        >
-                            <div className="bg-pink-100 p-2 rounded-full text-pink-600"><Heart size={20}/></div>
-                            <div>
-                                <div className="text-xs text-gray-500">Saved</div>
-                                <div className="font-bold text-[#063324] text-sm">Shortlist</div>
-                            </div>
-                        </motion.div>
+                                <motion.div 
+                                    initial={{ opacity: 0 }} animate={{ opacity: 1, y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 5, delay: 0.5 }}
+                                    className="absolute bottom-40 -right-24 bg-white p-4 rounded-2xl shadow-xl flex items-center gap-3 max-w-[200px] text-left hidden md:flex"
+                                >
+                                    <div className="bg-pink-100 p-2 rounded-full text-pink-600"><Heart size={20}/></div>
+                                    <div>
+                                        <div className="text-xs text-gray-500">Saved</div>
+                                        <div className="font-bold text-[#063324] text-sm">Shortlist</div>
+                                    </div>
+                                </motion.div>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>
@@ -608,6 +785,7 @@ const Testimonials = () => (
                 ].map((t, idx) => (
                     <div key={idx} className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-shadow flex flex-col justify-between h-80">
                         <p className="text-gray-600 leading-relaxed text-lg">&ldquo;{t.text}&rdquo;</p>
+                        <p className="text-gray-600 leading-relaxed text-lg">&quot;{t.text}&quot;</p>
                         <div className="flex items-center gap-4">
                             <div className={`w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-2xl`}>
                                 {t.emoji}

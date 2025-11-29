@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
-import { FileText, AlertCircle, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { FileText, AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
 
 const mockCalls = [
   { id: 101, agent: "Sarah J.", customer: "Student (Leeds)", duration: "4:12", sentiment: "Positive", score: 92, status: "Analyzed" },
@@ -12,6 +13,15 @@ export default function CallIntelligence() {
   return (
     <div className="max-w-5xl mx-auto">
       <header className="mb-8">
+        <div className="flex items-center gap-4 mb-6">
+          <Link 
+            href="/dashboard"
+            className="flex items-center gap-2 px-4 py-2 text-[#063324] border border-[#063324] rounded-full hover:bg-[#063324] hover:text-white transition-colors"
+          >
+            <ArrowLeft size={16} />
+            Back to Dashboard
+          </Link>
+        </div>
         <h1 className="text-4xl font-bold text-[#063324] mb-2">Call Intelligence Hub</h1>
         <p className="text-gray-500">AI-driven analysis of support & sales interactions.</p>
       </header>
@@ -28,7 +38,7 @@ export default function CallIntelligence() {
         </div>
         <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
           <h3 className="text-sm font-medium text-gray-500">Keyword Trend</h3>
-          <p className="text-lg font-semibold text-[#063324] mt-3">"Maintenance" ↑ 12%</p>
+          <p className="text-lg font-semibold text-[#063324] mt-3">&quot;Maintenance&quot; ↑ 12%</p>
         </div>
       </div>
 

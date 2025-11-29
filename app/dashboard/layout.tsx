@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MessageSquare, Mic, BarChart3, LogOut, LayoutDashboard } from 'lucide-react';
+import { Phone, MessageSquare, Mic, BarChart3, LogOut, LayoutDashboard, Zap, UserCircle } from 'lucide-react';
+import { UserButton } from "@clerk/nextjs";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -23,16 +24,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           
           <div className="text-xs font-bold text-[#D2E6DE]/40 uppercase px-4 py-2 mt-6">AI Tools</div>
           
+          <NavItem href="/dashboard/call-copilot" icon={<Zap size={20} />} label="Call Copilot" />
           <NavItem href="/dashboard/call-hub" icon={<Phone size={20} />} label="Call Intelligence" />
           <NavItem href="/dashboard/reply-engine" icon={<MessageSquare size={20} />} label="Match Engine" />
           <NavItem href="/dashboard/voice-coach" icon={<Mic size={20} />} label="Voice Coach" />
+          <NavItem href="/dashboard/student-summary" icon={<UserCircle size={20} />} label="Student Summary" />
           
         </nav>
 
         <div className="p-6">
-          <Link href="/" className="flex items-center gap-3 px-6 py-4 text-red-200 hover:bg-white/5 rounded-2xl transition-all duration-300 font-medium">
-            <LogOut size={20} /> Exit Admin
-          </Link>
+           <div className="flex items-center gap-3 px-6 py-4 bg-white/5 rounded-2xl">
+              <UserButton />
+              <div className="text-sm font-medium text-[#D2E6DE]">Admin User</div>
+           </div>
         </div>
       </aside>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MessageSquare, Mic, ArrowRight } from 'lucide-react';
+import { Phone, MessageSquare, Mic, ArrowRight, Zap } from 'lucide-react';
 
 export default function DashboardOverview() {
   return (
@@ -10,7 +10,16 @@ export default function DashboardOverview() {
         <p className="text-gray-500 text-lg">Your AI-powered admin panel for managing student housing operations.</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+        <FeatureCard
+          href="/dashboard/call-copilot"
+          icon={<Zap size={24} />}
+          title="Call → Insight → Reply Copilot"
+          description="Transform calls into smart summaries and personalized replies."
+          color="bg-yellow-50 text-yellow-600"
+          featured={true}
+        />
+
         <FeatureCard
           href="/dashboard/call-hub"
           icon={<Phone size={24} />}
@@ -38,7 +47,7 @@ export default function DashboardOverview() {
 
       {/* Quick Stats */}
       <div className="mt-12 bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm">
-        <h2 className="text-2xl font-bold text-[#063324] mb-6">Today's Overview</h2>
+        <h2 className="text-2xl font-bold text-[#063324] mb-6">Today&apos;s Overview</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="text-center">
             <div className="text-3xl font-bold text-[#063324] mb-1">127</div>
@@ -58,9 +67,16 @@ export default function DashboardOverview() {
   );
 }
 
-const FeatureCard = ({ href, icon, title, description, color }: any) => (
+const FeatureCard = ({ href, icon, title, description, color, featured }: any) => (
   <Link href={href}>
-    <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer h-full flex flex-col">
+    <div className={`bg-white p-8 rounded-[2rem] border shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer h-full flex flex-col ${
+      featured ? 'border-yellow-200 ring-2 ring-yellow-100' : 'border-gray-100'
+    }`}>
+      {featured && (
+        <div className="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded-full w-fit mb-4">
+          ⚡ NEW MVP
+        </div>
+      )}
       <div className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
         {icon}
       </div>
