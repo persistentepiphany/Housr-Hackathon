@@ -181,6 +181,13 @@ export default function ReplyEngine() {
   const [matchedProperties, setMatchedProperties] = useState<Property[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [isGeneratingVoice, setIsGeneratingVoice] = useState(false);
+  const [voiceUrl, setVoiceUrl] = useState<string | null>(null);
+
+  // ElevenLabs Config
+  const ELEVENLABS_API_KEY = process.env.NEXT_PUBLIC_ELEVENLABS_API_KEY;
+  const ELEVENLABS_VOICE_ID = process.env.NEXT_PUBLIC_ELEVENLABS_VOICE_ID;
+  const ELEVENLABS_MODEL_ID = "eleven_multilingual_v2";
 
   const handleGenerate = () => {
     if (!budgetMin || !budgetMax) return;
@@ -188,6 +195,7 @@ export default function ReplyEngine() {
     setIsGenerating(true);
     setResponse("");
     setMatchedProperties([]);
+    setVoiceUrl(null);
 
     const profile: StudentProfile = {
       firstName: firstName.trim(),
@@ -215,6 +223,63 @@ export default function ReplyEngine() {
     await navigator.clipboard.writeText(response);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleGenerateVoice = async () => {
+    if (!response) return;
+
+    const apiKey = ELEVENLABS_API_KEY;
+    const voiceId = ELEVENLABS_VOICE_ID;
+
+    if (!apiKey || !voiceId) {
+      alert("ElevenLabs is not configured. Please check your environment variables.");
+      return;
+    }
+
+    // Clean up text for speech (remove emojis, links, subjects)
+    let textToSpeak = response
+      .replace(/Subject:.*?\n/g, "") // Remove subject line
+      .replace(/https?:\/\/\S+/g, "check the link") // Replace URLs
+      .replace(/[*_#]/g, "") // Remove markdown
+      .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}]/gu, ""); // Remove emojis
+
+    try {
+      setIsGeneratingVoice(true);
+      setVoiceUrl(null);
+
+      const res = await fetch(
+        `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "audio/mpeg",
+            "Content-Type": "application/json",
+            "xi-api-key": apiKey,
+          },
+          body: JSON.stringify({
+            text: textToSpeak,
+            model_id: ELEVENLABS_MODEL_ID,
+            voice_settings: {
+              stability: 0.5,
+              similarity_boost: 0.8,
+              style: 0.0,
+              use_speaker_boost: true,
+            },
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to generate voice");
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      setVoiceUrl(url);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to generate voice note.");
+    } finally {
+      setIsGeneratingVoice(false);
+    }
   };
 
   return (
@@ -395,11 +460,12 @@ export default function ReplyEngine() {
               {response && (
                 <div className="flex gap-2">
                     <button 
-                        onClick={() => {}} // Placeholder for Voice
-                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-[#D2E6DE] transition-colors"
+                        onClick={handleGenerateVoice}
+                        disabled={isGeneratingVoice}
+                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-[#D2E6DE] transition-colors disabled:opacity-50 relative"
                         title="Generate Voice Note"
                     >
-                        <Music2 size={18} />
+                        {isGeneratingVoice ? <RefreshCw className="animate-spin" size={18} /> : <Music2 size={18} />}
                     </button>
                     <button 
                         onClick={handleCopy}
@@ -412,18 +478,35 @@ export default function ReplyEngine() {
               )}
             </div>
 
-            <div className="flex-1 relative z-10">
+            <div className="flex-1 relative z-10 overflow-hidden flex flex-col">
                 {isGenerating ? (
                     <div className="h-full flex flex-col items-center justify-center text-white/30 gap-4">
                         <div className="w-12 h-12 border-4 border-[#D2E6DE]/20 border-t-[#D2E6DE] rounded-full animate-spin"></div>
                         <p className="animate-pulse font-medium">Analysing 44,000 properties...</p>
                     </div>
                 ) : response ? (
-                    <textarea 
-                        value={response}
-                        onChange={(e) => setResponse(e.target.value)}
-                        className="w-full h-full bg-black/20 rounded-2xl border border-white/10 p-6 text-white/90 text-sm leading-relaxed font-mono outline-none focus:ring-2 focus:ring-[#D2E6DE]/30 resize-none"
-                    />
+                    <>
+                        <textarea 
+                            value={response}
+                            onChange={(e) => setResponse(e.target.value)}
+                            className="flex-1 w-full bg-black/20 rounded-2xl border border-white/10 p-6 text-white/90 text-sm leading-relaxed font-mono outline-none focus:ring-2 focus:ring-[#D2E6DE]/30 resize-none mb-4"
+                        />
+                        {voiceUrl && (
+                            <div className="bg-white/10 rounded-xl p-3 flex items-center gap-3 animate-fade-in">
+                                <div className="w-10 h-10 rounded-full bg-[#D2E6DE] flex items-center justify-center shrink-0">
+                                    <Music2 size={20} className="text-[#063324]"/>
+                                </div>
+                                <audio controls src={voiceUrl} className="flex-1 h-8" />
+                                <a 
+                                    href={voiceUrl} 
+                                    download="housr-voice-note.mp3"
+                                    className="text-xs font-bold text-[#D2E6DE] hover:text-white hover:underline"
+                                >
+                                    Download
+                                </a>
+                            </div>
+                        )}
+                    </>
                 ) : (
                     <div className="h-full flex flex-col items-center justify-center text-white/20 border-2 border-dashed border-white/10 rounded-2xl">
                         <Sparkles size={48} className="mb-4 opacity-50"/>
