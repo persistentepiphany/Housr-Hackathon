@@ -137,7 +137,8 @@ const TTSConcierge = ({ autoStart = false }: { autoStart?: boolean }) => {
         recog.interimResults = false;
         recog.lang = "en-US";
         recog.onresult = (event: SpeechRecognitionEvent) => {
-          const transcript = event.results[0][0].transcript;
+          const lastResultIndex = event.results.length - 1;
+          const transcript = event.results[lastResultIndex][0].transcript;
           setInputValue("");
           processUserMessageRef.current(transcript);
         };
@@ -258,12 +259,10 @@ const TTSConcierge = ({ autoStart = false }: { autoStart?: boolean }) => {
     }
 
     const reply = buildSmartReply(trimmed);
-    if (reply !== lastBotText) {
-      setMessages((prev) => [...prev, { role: "bot", text: reply }]);
-      setLastBotText(reply);
-      setAskedCount((prev) => prev + 1);
-      speak(reply);
-    }
+    setMessages((prev) => [...prev, { role: "bot", text: reply }]);
+    setLastBotText(reply);
+    setAskedCount((prev) => prev + 1);
+    speak(reply);
   };
   processUserMessageRef.current = processUserMessage;
 
@@ -289,11 +288,9 @@ const TTSConcierge = ({ autoStart = false }: { autoStart?: boolean }) => {
       { title: "Modern Studio", price: "$940/mo", summary: "Gym onsite, furnished, flexible lease start." },
     ];
     setRecommendations(recs);
-    if (closing !== lastBotText) {
-      setMessages((prev) => [...prev, { role: "bot", text: closing }]);
-      setLastBotText(closing);
-      speak(closing);
-    }
+    setMessages((prev) => [...prev, { role: "bot", text: closing }]);
+    setLastBotText(closing);
+    speak(closing);
     setFinished(true);
     logSession(recs, lastAnswer);
   };

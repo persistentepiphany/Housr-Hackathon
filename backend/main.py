@@ -1,7 +1,7 @@
 import os
 import requests
 from pathlib import Path
-from typing import Literal, List, Dict, Any
+from typing import Literal, List, Dict, Any, Optional
 from datetime import datetime
 import json
 
@@ -74,11 +74,11 @@ class TTSRequest(BaseModel):
         DEFAULT_VOICE_ID,
         description="Voice id or name configured in ElevenLabs",
     )
-    model: str | None = Field(
+    model: Optional[str] = Field(
         None,
         description="ElevenLabs model id to use; defaults to ELEVEN_MODEL_ID or eleven_turbo_v2",
     )
-    agent_id: str | None = Field(
+    agent_id: Optional[str] = Field(
         DEFAULT_AGENT_ID,
         description="ElevenLabs agent id to use when generating speech",
     )
