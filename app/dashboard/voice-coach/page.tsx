@@ -88,7 +88,7 @@ export default function VoiceCoach() {
           <div className="mt-8 p-4 bg-[#F0F7F4] rounded-2xl border border-[#063324]/10 inline-block animate-fade-in">
             <p className="text-sm font-semibold text-[#063324]">
               <span className="inline-block w-2 h-2 bg-red-500 rounded-full mr-2 animate-ping" />
-              AI Listening: "Great handling of the objection regarding deposit returns..."
+              AI Listening: &quot;Great handling of the objection regarding deposit returns...&quot;
             </p>
           </div>
         )}
