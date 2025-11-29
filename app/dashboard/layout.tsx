@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Phone, MessageSquare, Mic, BarChart3, LogOut, LayoutDashboard } from 'lucide-react';
+import { UserButton } from "@clerk/nextjs";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,9 +31,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         <div className="p-6">
-          <Link href="/" className="flex items-center gap-3 px-6 py-4 text-red-200 hover:bg-white/5 rounded-2xl transition-all duration-300 font-medium">
-            <LogOut size={20} /> Exit Admin
-          </Link>
+           <div className="flex items-center gap-3 px-6 py-4 bg-white/5 rounded-2xl">
+              <UserButton />
+              <div className="text-sm font-medium text-[#D2E6DE]">Admin User</div>
+           </div>
         </div>
       </aside>
 
