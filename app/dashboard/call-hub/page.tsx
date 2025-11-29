@@ -28,7 +28,7 @@ export default function CallIntelligence() {
         </div>
         <div className="bg-white p-6 rounded-[2rem] shadow-sm border border-gray-100">
           <h3 className="text-sm font-medium text-gray-500">Keyword Trend</h3>
-          <p className="text-lg font-semibold text-[#063324] mt-3">"Maintenance" ↑ 12%</p>
+          <p className="text-lg font-semibold text-[#063324] mt-3">&quot;Maintenance&quot; ↑ 12%</p>
         </div>
       </div>
 

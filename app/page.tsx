@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronDown, Search, Heart, MapPin, Star, ArrowRight, CheckCircle2, Play, Calendar, FileText, Users, Gift, Coffee, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -110,8 +111,8 @@ const Hero = () => (
         </div>
 
         <div className="flex items-center gap-4 pt-8 opacity-80">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" className="h-10" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" className="h-10" />
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store" width={120} height={40} className="h-10 w-auto" />
+            <Image src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Play Store" width={135} height={40} className="h-10 w-auto" />
         </div>
       </div>
 
@@ -382,7 +383,7 @@ const Testimonials = () => (
                     { name: "Alice Carter", color: "bg-green-100 text-green-600", emoji: "🤑", text: "Great company. Always happy to assist and deliver a brilliant service. Really good perks too!" },
                 ].map((t, idx) => (
                     <div key={idx} className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-shadow flex flex-col justify-between h-80">
-                        <p className="text-gray-600 leading-relaxed text-lg">"{t.text}"</p>
+                        <p className="text-gray-600 leading-relaxed text-lg">&quot;{t.text}&quot;</p>
                         <div className="flex items-center gap-4">
                             <div className={`w-12 h-12 rounded-full ${t.color} flex items-center justify-center text-2xl`}>
                                 {t.emoji}
