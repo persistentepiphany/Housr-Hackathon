@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Phone, MessageSquare, Mic, BarChart3, LogOut, LayoutDashboard } from 'lucide-react';
+import { Phone, MessageSquare, Mic, BarChart3, LogOut, LayoutDashboard, Zap } from 'lucide-react';
 import { UserButton } from "@clerk/nextjs";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -24,6 +24,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           
           <div className="text-xs font-bold text-[#D2E6DE]/40 uppercase px-4 py-2 mt-6">AI Tools</div>
           
+          <NavItem href="/dashboard/call-copilot" icon={<Zap size={20} />} label="Call Copilot" />
           <NavItem href="/dashboard/call-hub" icon={<Phone size={20} />} label="Call Intelligence" />
           <NavItem href="/dashboard/reply-engine" icon={<MessageSquare size={20} />} label="Match Engine" />
           <NavItem href="/dashboard/voice-coach" icon={<Mic size={20} />} label="Voice Coach" />
